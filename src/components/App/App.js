@@ -31,20 +31,21 @@ export function App() {
       })
       .then(data => {
         if (data.hits.length === 0) {
+          setLoading(false);
+
           throw new Error();
         }
 
         setImageList(state => [...state, ...data.hits]);
+        setLoading(false);
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth',
+        });
       })
-      .catch(error => {
+      .catch(() => {
         toast.error('Please input correct picture name');
-      })
-      .finally(setLoading(false));
-
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'smooth',
-    });
+      });
   }, [image, page]);
 
   const handleSearchImages = evt => {
