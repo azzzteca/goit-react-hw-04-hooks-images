@@ -4,11 +4,16 @@ import s from './Modal.module.css';
 
 export function Modal({ url, closeModal }) {
   useEffect(() => {
-    window.addEventListener('keydown', evt => {
+    const handlekeyDown = evt => {
       if (evt.code === 'Escape') {
-        this.props.closeModal();
+        closeModal();
       }
-    });
+    };
+    window.addEventListener('keydown', handlekeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handlekeyDown);
+    };
   });
 
   return (
